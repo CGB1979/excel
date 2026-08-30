@@ -1,0 +1,1 @@
+window.CONVERTIDOR_CONFIG={columnas:{chasis:"Chasis",playa:"Playa",bloque:"Bloque",carril:"Carril",posicion:"Posición",ubicacion:"Ubicación",informacion:"Información"},codigoBarras:{encabezado:"Código de barras",formato:"CODE128",ancho:2,alto:70,margen:8}};
