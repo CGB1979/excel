@@ -1,5 +1,3 @@
-# Convertidor de Excel — 1.0.0.c
+# Convertidor de Excel — 1.0.0.e
 
-Proyecto independiente. Selecciona uno o varios Excel y genera un XLSX unificado. Las columnas se mapean por cabecera, no por posición. El Chasis se configura en `js/configuracionColumnas.js`. Los duplicados con ubicación completa idéntica se unifican; si difiere Playa, Bloque, Carril, Posición o Ubicación, se conservan y se resaltan en naranja suave. `Información` se conserva y se combina al unificar. El resultado incluye autofiltro y códigos CODE128 como imágenes embebidas.
-
-Dependencias de navegador: SheetJS, ExcelJS y JsBarcode vía jsDelivr.
+Proyecto independiente. Selecciona uno o varios Excel y genera un XLSX unificado. Las columnas se reconocen por cabecera, sin importar su orden. El Chasis se configura en `js/configuracionColumnas.js`. Los duplicados con ubicación completa idéntica se unifican; si el mismo chasis aparece con una ubicación diferente, se conservan y se marcan. Si dos chasis diferentes ocupan exactamente la misma combinación Playa + Bloque + Carril + Posición + Ubicación, los registros se marcan como conflicto de ubicación. `Información` se conserva y se combina cuando corresponde. El resultado incluye autofiltro dinámico en todas las cabeceras y códigos CODE128 como imágenes embebidas.
