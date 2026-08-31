@@ -1,4 +1,4 @@
-const CACHE_NAME="convertidor-excel-v1.0.0.f";
+const CACHE_NAME="convertidor-excel-v1.0.0.g";
 const ASSETS=[
   "./",
   "./index.html",

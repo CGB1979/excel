@@ -1,3 +1,6 @@
 # Convertidor de Excel — 1.0.0.e
 
 Proyecto independiente. Selecciona uno o varios Excel y genera un XLSX unificado. Las columnas se reconocen por cabecera, sin importar su orden. El Chasis se configura en `js/configuracionColumnas.js`. Los duplicados con ubicación completa idéntica se unifican; si el mismo chasis aparece con una ubicación diferente, se conservan y se marcan. Si dos chasis diferentes ocupan exactamente la misma combinación Playa + Bloque + Carril + Posición + Ubicación, los registros se marcan como conflicto de ubicación. `Información` se conserva y se combina cuando corresponde. El resultado incluye autofiltro dinámico en todas las cabeceras y códigos CODE128 como imágenes embebidas.
+
+
+Corrección v1.0.0.g: las imágenes de códigos de barras se insertan mediante un anclaje two-cell (tl/br) en lugar de ext, para evitar que ExcelJS genere un anclaje de una celda que puede no renderizar correctamente en el XLSX exportado.
