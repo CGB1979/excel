@@ -1,1 +1,1 @@
-window.APP_VERSION="1.0.0.c";document.addEventListener("DOMContentLoaded",()=>{const e=document.getElementById("versionBadge");if(e)e.textContent=`v${window.APP_VERSION}`});
+window.APP_VERSION="1.0.0.d";document.addEventListener("DOMContentLoaded",()=>{const e=document.getElementById("versionBadge");if(e)e.textContent=`v${window.APP_VERSION}`});
