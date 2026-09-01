@@ -154,22 +154,22 @@ function nextRelationshipId(relsXml) {
 }
 
 function ensureDrawingRelationship(sheetRelsXml, drawingRid) {
-  const rel = `<Relationship Id="${drawingRid}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing" Target="../drawings/drawing1.xml"/>`;
+  const rel = `<Relationship Id=\"${drawingRid}\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing\" Target=\"../drawings/drawing1.xml\"/>`;
   if (sheetRelsXml.includes('relationships/drawing')) return sheetRelsXml;
   return sheetRelsXml.replace('</Relationships>', `${rel}</Relationships>`);
 }
 
 function ensureDrawingNode(sheetXml, drawingRid) {
   if (sheetXml.includes('<drawing ')) return sheetXml;
-  return sheetXml.replace('</worksheet>', `<drawing xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:id="${drawingRid}"/></worksheet>`);
+  return sheetXml.replace('</worksheet>', `<drawing xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" r:id=\"${drawingRid}\"/></worksheet>`);
 }
 
 function ensureContentTypes(contentTypesXml) {
   if (!contentTypesXml.includes('Extension="png"')) {
-    contentTypesXml = contentTypesXml.replace('</Types>', '<Default Extension="png" ContentType="image/png"/></Types>');
+    contentTypesXml = contentTypesXml.replace('</Types>', '<Default Extension=\"png\" ContentType=\"image/png\"/></Types>');
   }
   if (!contentTypesXml.includes('/xl/drawings/drawing1.xml')) {
-    contentTypesXml = contentTypesXml.replace('</Types>', '<Override PartName="/xl/drawings/drawing1.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/></Types>');
+    contentTypesXml = contentTypesXml.replace('</Types>', '<Override PartName=\"/xl/drawings/drawing1.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawing+xml\"/></Types>');
   }
   return contentTypesXml;
 }
@@ -187,37 +187,11 @@ function buildDrawingXml(images) {
     const rid = `rId${i + 1}`;
     const name = `CodigoBarra_${row + 1}`;
     // oneCellAnchor con la estructura necesaria para una imagen incrustada
-    return `
-<xdr:oneCellAnchor>
-  <xdr:from>
-    <xdr:col>${col}</xdr:col>
-    <xdr:colOff>0</xdr:colOff>
-    <xdr:row>${row}</xdr:row>
-    <xdr:rowOff>0</xdr:rowOff>
-  </xdr:from>
-  <xdr:ext cx="${cx}" cy="${cy}"/>
-  <xdr:pic>
-    <xdr:nvPicPr>
-      <xdr:cNvPr id="${i + 1}" name="${xmlEscape(name)}"/>
-      <xdr:cNvPicPr/>
-    </xdr:nvPicPr>
-    <xdr:blipFill>
-      <a:blip r:embed="${rid}"/>
-      <a:stretch><a:fillRect/></a:stretch>
-    </xdr:blipFill>
-    <xdr:spPr>
-      <a:xfrm>
-        <a:off x="0" y="0"/>
-        <a:ext cx="${cx}" cy="${cy}"/>
-      </a:xfrm>
-      <a:prstGeom prst="rect"><a:avLst/></a:prstGeom>
-    </xdr:spPr>
-  </xdr:pic>
-  <xdr:clientData/>
-</xdr:oneCellAnchor>`;
+    return `\n<xdr:oneCellAnchor>\n  <xdr:from>\n    <xdr:col>${col}</xdr:col>\n    <xdr:colOff>0</xdr:colOff>\n    <xdr:row>${row}</xdr:row>\n    <xdr:rowOff>0</xdr:rowOff>\n  </xdr:from>\n  <xdr:ext cx="${cx}" cy="${cy}"/>\n  <xdr:pic>\n    <xdr:nvPicPr>\n      <xdr:cNvPr id="${i + 1}" name="${xmlEscape(name)}"/>\n      <xdr:cNvPicPr/>\n    </xdr:nvPicPr>\n    <xdr:blipFill>\n      <a:blip r:embed="${rid}"/>\n      <a:stretch><a:fillRect/></a:stretch>\n    </xdr:blipFill>\n    <xdr:spPr>\n      <a:xfrm>\n        <a:off x="0" y="0"/>\n        <a:ext cx="${cx}" cy="${cy}"/>\n      </a:xfrm>\n      <a:prstGeom prst="rect"><a:avLst/></a:prstGeom>\n    </xdr:spPr>\n  </xdr:pic>\n  <xdr:clientData/>\n</xdr:oneCellAnchor>`;
   }).join('');
 
-  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><xdr:wsDr xmlns:xdr="${NS}" xmlns:a="${A}" xmlns:r="${R}">${anchors}</xdr:wsDr>`;
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>` +
+    `<xdr:wsDr xmlns:xdr="${NS}" xmlns:a="${A}" xmlns:r="${R}">${anchors}</xdr:wsDr>`;
 }
 
 function buildDrawingRels(images) {
@@ -236,7 +210,7 @@ async function addBarcodeImagesToXlsx(buffer, images) {
   const contentTypesPath = '[Content_Types].xml';
 
   let sheetXml = await zip.file(sheetPath).async('string');
-  let relsXml = zip.file(relsPath) ? await zip.file(relsPath).async('string') : '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"></Relationships>';
+  let relsXml = zip.file(relsPath) ? await zip.file(relsPath).async('string') : '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/pac[...]
   let contentTypesXml = await zip.file(contentTypesPath).async('string');
 
   const drawingRid = nextRelationshipId(relsXml);
