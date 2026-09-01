@@ -186,14 +186,46 @@ function buildDrawingXml(images) {
     const col = img.col;
     const rid = `rId${i + 1}`;
     const name = `CodigoBarra_${row + 1}`;
-    return `<xdr:oneCellAnchor><xdr:from><xdr:col>${col}</xdr:col><xdr:colOff>0</xdr:colOff><xdr:row>${row}</xdr:row><xdr:rowOff>0</xdr:rowOff></xdr:from><xdr:ext cx="${cx}" cy="${cy}"/><xdr:pic><xdr:nvPicPr><xdr:cNvPr id="${i + 1}" name="${xmlEscape(name)}"/><xdr:cNvPicPr/></xdr:nvPicPr><xdr:blipFill><a:blip xmlns:a="${A}" r:embed="${rid}"/><a:stretch xmlns:a="${A}"><a:fillRect/></a:stretch></xdr:blipFill><xdr:spPr><a:xfrm xmlns:a="${A}"><a:off x="0" y="0"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm><a:prstGeom xmlns:a="${A}" prst="rect"><a:avLst/></a:prstGeom></xdr:spPr></xdr:pic><xdr:clientData/></xdr:oneCellAnchor>`;
+    // oneCellAnchor con la estructura necesaria para una imagen incrustada
+    return `
+<xdr:oneCellAnchor>
+  <xdr:from>
+    <xdr:col>${col}</xdr:col>
+    <xdr:colOff>0</xdr:colOff>
+    <xdr:row>${row}</xdr:row>
+    <xdr:rowOff>0</xdr:rowOff>
+  </xdr:from>
+  <xdr:ext cx="${cx}" cy="${cy}"/>
+  <xdr:pic>
+    <xdr:nvPicPr>
+      <xdr:cNvPr id="${i + 1}" name="${xmlEscape(name)}"/>
+      <xdr:cNvPicPr/>
+    </xdr:nvPicPr>
+    <xdr:blipFill>
+      <a:blip r:embed="${rid}"/>
+      <a:stretch><a:fillRect/></a:stretch>
+    </xdr:blipFill>
+    <xdr:spPr>
+      <a:xfrm>
+        <a:off x="0" y="0"/>
+        <a:ext cx="${cx}" cy="${cy}"/>
+      </a:xfrm>
+      <a:prstGeom prst="rect"><a:avLst/></a:prstGeom>
+    </xdr:spPr>
+  </xdr:pic>
+  <xdr:clientData/>
+</xdr:oneCellAnchor>`;
   }).join('');
 
   return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><xdr:wsDr xmlns:xdr="${NS}" xmlns:a="${A}" xmlns:r="${R}">${anchors}</xdr:wsDr>`;
 }
 
 function buildDrawingRels(images) {
-  const rels = images.map((img, i) => `<Relationship Id="rId${i + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/image${i + 1}.png"/>`).join('');
+  const rels = images
+    .map((img, i) =>
+      `<Relationship Id="rId${i + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/image${i + 1}.png"/>`
+    )
+    .join('');
   return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${rels}</Relationships>`;
 }
 
