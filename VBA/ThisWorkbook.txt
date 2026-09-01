@@ -1,0 +1,35 @@
+' Pegar este código en el módulo ThisWorkbook del XLSM.
+Option Explicit
+
+Private Sub Workbook_Open()
+    HideAllBarcodes
+End Sub
+
+Private Sub Workbook_SheetSelectionChange(ByVal Sh As Object, ByVal Target As Range)
+    On Error GoTo Salir
+    Application.EnableEvents = False
+    HideAllBarcodes
+    If Target.Rows.Count <> 1 Then GoTo Salir
+    ShowBarcodeForRow Sh, Target.Row
+Salir:
+    Application.EnableEvents = True
+End Sub
+
+Private Sub HideAllBarcodes()
+    Dim ws As Worksheet, shp As Shape
+    For Each ws In Me.Worksheets
+        For Each shp In ws.Shapes
+            If Left$(shp.Name, 13) = "BARCODE_ROW_" Then shp.Visible = msoFalse
+        Next shp
+    Next ws
+End Sub
+
+Private Sub ShowBarcodeForRow(ByVal Sh As Object, ByVal rowNumber As Long)
+    Dim shp As Shape
+    Dim wanted As String
+    wanted = "BARCODE_ROW_" & CStr(rowNumber)
+    On Error Resume Next
+    Set shp = Sh.Shapes(wanted)
+    On Error GoTo 0
+    If Not shp Is Nothing Then shp.Visible = msoTrue
+End Sub

@@ -1,74 +1,29 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#4f8f5b">
-  <title>Convertidor de Excel</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="css/estilos.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#4f8f5b"><title>Convertidor de Excel</title>
+<link rel="manifest" href="manifest.json"><link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-  <main class="app-shell">
-    <header class="app-header">
-      <div>
-        <div class="eyebrow">HERRAMIENTA</div>
-        <h1>Convertidor de Excel</h1>
-        <p>Unificar planillas y preparar códigos de barras</p>
-      </div>
-      <div class="version-badge">v1.1.0</div>
-    </header>
-
-    <section class="card">
-      <div class="card-title-row">
-        <div>
-          <h2>Cargar archivos Excel</h2>
-          <p>Podés seleccionar uno o varios archivos.</p>
-        </div>
-        <span class="status-pill">Sin archivos</span>
-      </div>
-      <div class="upload-button" aria-disabled="true">
-        <span>Seleccionar Excel</span>
-      </div>
-      <div class="file-list hidden">
-        <div class="file-row">
-          <div class="file-name">archivo-ejemplo.xlsx</div>
-          <div class="file-meta">0 registros</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="card">
-      <div class="card-title-row">
-        <div>
-          <h2>Generar Excel</h2>
-          <p>Las columnas se reconocen por su cabecera, sin importar su orden.</p>
-        </div>
-      </div>
-      <div class="info-grid">
-        <div class="info-box">
-          <span>Archivos</span>
-          <strong>0</strong>
-        </div>
-        <div class="info-box">
-          <span>Registros</span>
-          <strong>0</strong>
-        </div>
-      </div>
-      <button class="big-button btn-primary" disabled>Generar Excel unificado</button>
-    </section>
-
-    <section class="card rules-card">
-      <h2>Cómo trabaja</h2>
-      <ul>
-        <li>Las columnas se identifican por <strong>cabecera</strong>, no por posición.</li>
-        <li>El <strong>Chasis</strong> se toma de la configuración de columnas.</li>
-        <li>Los duplicados con la misma ubicación completa se unifican.</li>
-        <li>Los duplicados con cualquier diferencia de ubicación se conservan y se marcan en naranja suave.</li>
-        <li><strong>Información</strong> se conserva y se combina cuando corresponde.</li>
-        <li>El resultado incluye filtros en las cabeceras y una columna <strong>Código de barras</strong> con imagen.</li>
-      </ul>
-    </section>
-  </main>
-</body>
-</html>
+<main class="app-shell">
+<header class="app-header"><div><div class="eyebrow">HERRAMIENTA</div><h1>Convertidor de Excel</h1><p>Unificar planillas y preparar códigos de barras</p></div><div class="version-badge">v1.2.0</div></header>
+<section class="card">
+<div class="card-title-row"><div><h2>Cargar archivos Excel</h2><p>Podés seleccionar uno o varios archivos.</p></div><span id="statusPill" class="status-pill">Sin archivos</span></div>
+<label class="upload-button"><span>Seleccionar Excel</span><input id="fileInput" type="file" accept=".xlsx,.xlsm" multiple></label>
+<div id="fileList" class="file-list hidden"></div>
+<div id="loadError" class="error hidden"></div>
+</section>
+<section class="card">
+<div class="card-title-row"><div><h2>Generar Excel</h2><p>Las columnas se reconocen por su cabecera, sin importar su orden.</p></div></div>
+<div class="info-grid"><div class="info-box"><span>Archivos</span><strong id="fileCount">0</strong></div><div class="info-box"><span>Registros</span><strong id="rowCount">0</strong></div></div>
+<button id="exportBtn" class="big-button btn-primary" disabled>Generar Excel unificado</button>
+<div id="progressArea" class="progress-area hidden"><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div><div id="progressText" class="progress-text">Preparando...</div></div>
+<div id="resultBox" class="result-box hidden"><div><strong>Excel generado</strong><p id="resultText">El archivo está listo.</p></div><button id="downloadBtn" class="big-button btn-secondary">Descargar Excel</button></div>
+</section>
+<section class="card rules-card"><h2>Cómo trabaja</h2><ul><li>Las columnas se identifican por <strong>cabecera</strong>, no por posición.</li><li>El <strong>Chasis</strong> se utiliza para generar CODE128.</li><li>El resultado incluye filtros en las cabeceras.</li><li>La columna <strong>Código de barras</strong> genera una imagen de 285 × 40 px.</li><li>La lógica VBA preparada permite mostrar únicamente el código de la fila seleccionada.</li></ul></section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+<script src="js/app.js"></script>
+</body></html>
