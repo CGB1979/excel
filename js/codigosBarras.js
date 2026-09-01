@@ -1,1 +1,0 @@
-window.BarcodeUtil={createPngDataUrl(text){return new Promise((resolve,reject)=>{const c=document.createElement("canvas");try{JsBarcode(c,String(text),{format:window.CONVERTIDOR_CONFIG.codigoBarras.formato,width:2,height:70,margin:8,displayValue:false});resolve(c.toDataURL("image/png"))}catch(e){reject(e)}})}};
