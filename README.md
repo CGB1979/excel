@@ -1,4 +1,4 @@
-# Excel Main v1.2.0
+# Excel Main v1.2.1
 
 Esta versión parte de la base visual v1.1.0 y agrega carga, lectura, compilación y exportación XLSX con CODE128.
 
